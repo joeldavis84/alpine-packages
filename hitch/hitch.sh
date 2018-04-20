@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec /usr/bin/hitch --config /etc/hitch/hitch.conf -p /var/run/hitch.pid
+exec /usr/bin/hitchd --config /etc/hitch/hitch.conf -p /var/run/hitch.pid
