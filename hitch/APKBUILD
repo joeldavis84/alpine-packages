@@ -14,14 +14,15 @@ depends="libressl"
 makedepends="libressl-dev autoconf automake byacc flex libev-dev py-docutils"
 source="https://github.com/varnish/hitch/archive/hitch-$pkgver.tar.gz
 $pkgname.conf
-$pkgname.initd"
+$pkgname.initd
+$pkgname.sh"
 builddir="$srcdir/$pkgname-$pkgname-$pkgver"
 install="$pkgname.pre-install $pkgname.post-install"
 
 build() {
 	cd "$builddir"
 	./bootstrap
-	./configure --prefix=/usr --sbindir=/usr/bin
+	./configure --prefix=/usr --sbindir=/usr/bin --program-suffix=d
 	make
 }
 
@@ -31,6 +32,7 @@ package() {
 	install -dm0700 -o 160 -g 160 "$pkgdir"/etc/$pkgname
 	install -Dm0700 -o 160 -g 160  "$srcdir"/$pkgname.conf "$pkgdir"/etc/$pkgname/$pkgname.conf
 	install -Dm0700 "$srcdir"/$pkgname.initd "$pkgdir"/etc/init.d/$pkgname
+	install -Dm0700 "$srcdir"/$pkgname.sh "$pkgdir"/usr/bin/$pkgname
 }
 
 sha512sums="e49600ec2d6ed547932858aa75335c332249a0505ee2759e418576246cda296d7ca06f64c93f912362fe0cd4bebb7d064ea7b51d1037dcda1522d62b6136fa54  hitch-1.4.7.tar.gz
