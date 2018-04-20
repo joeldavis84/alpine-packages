@@ -21,7 +21,7 @@ install="$pkgname.pre-install $pkgname.post-install"
 build() {
 	cd "$builddir"
 	./bootstrap
-	./configure --prefix=/usr
+	./configure --prefix=/usr --sbindir=/usr/bin
 	make
 }
 

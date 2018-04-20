@@ -13,7 +13,7 @@ start() {
 
         ebegin Starting Hitch SSL Termination Service
 
-        start-stop-daemon -b --start --exec /usr/sbin/hitch --make-pidfile --pidfile=/var/run/hitch.pid -- \
+        start-stop-daemon -b --start --exec /usr/bin/hitch --make-pidfile --pidfile=/var/run/hitch.pid -- \
                 --config /etc/hitch/hitch.conf -p /var/run/hitch.pid
 
         eend $?
@@ -23,7 +23,7 @@ start() {
 stop(){
 
         ebegin Stopping Hitch SSL Termination Service
-        start-stop-daemon --stop --exec /usr/sbin/hitch --pidfile=/var/run/hitch.pid 
+        start-stop-daemon --stop --exec /usr/bin/hitch --pidfile=/var/run/hitch.pid 
         eend $?
 }
 
