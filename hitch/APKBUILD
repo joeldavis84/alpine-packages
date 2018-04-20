@@ -28,8 +28,8 @@ build() {
 package() {
 	cd "$builddir"
 	make DESTDIR="$pkgdir"/ install
-	install -dm0700 -o hitch -g hitch "$pkgdir"/etc/$pkgname
-	install -Dm0700 -o hitch -g hitch  "$srcdir"/$pkgname.conf "$pkgdir"/etc/$pkgname/$pkgname.conf
+	install -dm0700 -o 160 -g 160 "$pkgdir"/etc/$pkgname
+	install -Dm0700 -o 160 -g 160  "$srcdir"/$pkgname.conf "$pkgdir"/etc/$pkgname/$pkgname.conf
 	install -Dm0700 "$srcdir"/$pkgname.initd "$pkgdir"/etc/init.d/$pkgname
 }
 

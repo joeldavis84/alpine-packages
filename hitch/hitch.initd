@@ -2,8 +2,7 @@
   
 name=hitch
 command="/usr/sbin/hitch"
-pidfile="/run/$RC_SVCNAME/$RC_SVCNAME.pid"
-start_stop_daemon_args="--args-for-start-stop-daemon"
+pidfile="/var/run/$RC_SVCNAME.pid"
 command_background="yes"
 
 depend() {
