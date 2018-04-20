@@ -1,0 +1,30 @@
+#!/sbin/openrc-run
+  
+name=hitch
+command="/usr/sbin/hitch"
+pidfile="/run/$RC_SVCNAME/$RC_SVCNAME.pid"
+start_stop_daemon_args="--args-for-start-stop-daemon"
+command_background="yes"
+
+depend() {
+        need net
+}
+
+start() {
+
+        ebegin Starting Hitch SSL Termination Service
+
+        start-stop-daemon -b --start --exec /usr/sbin/hitch --make-pidfile --pidfile=/var/run/hitch.pid -- \
+                --config /etc/hitch/hitch.conf -p /var/run/hitch.pid
+
+        eend $?
+
+}
+
+stop(){
+
+        ebegin Stopping Hitch SSL Termination Service
+        start-stop-daemon --stop --exec /usr/sbin/hitch --pidfile=/var/run/hitch.pid 
+        eend $?
+}
+

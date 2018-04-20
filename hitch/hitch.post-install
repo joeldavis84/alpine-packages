@@ -1,0 +1,14 @@
+#!/bin/sh
+
+keyFile="/tmp/hitch-server.$$.key"
+csrFile="/tmp/hitch-server.$$.csr"
+pemFile="/tmp/hitch-server.$$.pem"
+
+echo "Generating temporary self-signed certificate..."
+openssl genrsa -out $keyFile >/dev/null 2>&1
+openssl req -new -key $keyFile -out $csrFile -subj '/C=US/ST=North Carolina/L=Durham/O=Alpine Linux/OU=Awesome User/CN=localhost/emailAddress=root@localhost' >/dev/null 2>&1
+openssl x509 -req -in $csrFile -out $pemFile -signkey $keyFile >/dev/null 2>&1
+
+cat $pemFile $keyFile > /tmp/hitch-final.$$.pem
+install -m0600 -o hitch -g hitch /tmp/hitch-final.$$.pem /etc/hitch/hitch.pem
+rm -f $keyFile $csrFile $pemFile /tmp/hitch-final.$$.pem

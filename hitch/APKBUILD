@@ -1,0 +1,38 @@
+# Contributor: Joel Davis <rhjoel84@gmail.com>
+# Maintainer: Joel Davis <rhjoel84@gmail.com>
+pkgname=hitch
+pkgver=1.4.7
+pkgrel=3
+pkgdesc="SSL termination daemon maintained by Varnish Software."
+pkgusers="hitch"
+pkggroups="hitch"
+subpackages="$pkgname-doc"
+url="https://hitch-tls.org/"
+arch="all"
+license="BSD"
+depends="libressl"
+makedepends="libressl-dev autoconf automake byacc flex libev-dev py-docutils"
+source="https://github.com/varnish/hitch/archive/hitch-$pkgver.tar.gz
+$pkgname.conf
+$pkgname.initd"
+builddir="$srcdir/$pkgname-$pkgname-$pkgver"
+install="$pkgname.pre-install $pkgname.post-install"
+
+build() {
+	cd "$builddir"
+	./bootstrap
+	./configure --prefix=/usr
+	make
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir"/ install
+	install -dm0700 -o hitch -g hitch "$pkgdir"/etc/$pkgname
+	install -Dm0700 -o hitch -g hitch  "$srcdir"/$pkgname.conf "$pkgdir"/etc/$pkgname/$pkgname.conf
+	install -Dm0700 "$srcdir"/$pkgname.initd "$pkgdir"/etc/init.d/$pkgname
+}
+
+sha512sums="e49600ec2d6ed547932858aa75335c332249a0505ee2759e418576246cda296d7ca06f64c93f912362fe0cd4bebb7d064ea7b51d1037dcda1522d62b6136fa54  hitch-1.4.7.tar.gz
+1a112ea5e79a4deb3ed663e7802e11634995ca17180817b3f96f10935dfd46e21df84d3c86fbf7c2b8b73d55443f5f9aba414495e3b366880edffd9fa7d40f35  hitch.conf
+5e186d9cdd8b558d9e1abd0b5ac7d53f753b45e170670463a51f792ecce712bb0433e78a6d7a3974e913fc33c952beb92fc06cb0803cd9d57596b1810821f1ed  hitch.initd"
